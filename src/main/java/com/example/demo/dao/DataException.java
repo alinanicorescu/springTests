@@ -1,7 +1,7 @@
 package com.example.demo.dao;
 
 /**
- * Created by alinanicorescu on 01/07/2020.
+ * Exception class for Database errors
  */
 public class DataException extends Exception {
     public DataException(String errorMessage) {

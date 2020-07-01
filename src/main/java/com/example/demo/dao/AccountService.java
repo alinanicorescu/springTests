@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
- * Created by alinanicorescu on 01/07/2020.
+ * Service class for account operations
  */
 @Service
 public class AccountService {

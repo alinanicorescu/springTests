@@ -49,7 +49,8 @@ public class AccountController {
     public void deposit(@RequestParam("email") String email,
                         @RequestParam("accountCode") String accountCode,
                         @RequestParam("amount") BigDecimal amount) {
-        log.trace("deposit for email %s, account code %s, amount %d", email, accountCode, amount);
+        log.trace("deposit for email %s, account code %s, amount %d",
+                email, accountCode, amount);
         try {
             accountService.deposit(email, accountCode, amount);
         } catch (AccountOperationException e) {
@@ -66,7 +67,8 @@ public class AccountController {
                          @RequestParam("from") String fromAccount,
                          @RequestParam("to") String toAccount,
                          @RequestParam("amount") BigDecimal amount) {
-        log.trace("transfer for email %s, fromAccount %s toAccount %s amount %d", email, fromAccount, toAccount, amount);
+        log.trace("transfer for email %s, fromAccount %s toAccount %s amount %d", email,
+                fromAccount, toAccount, amount);
         try {
             accountService.transfer(email, fromAccount, toAccount, amount);
         } catch (AccountOperationException e) {

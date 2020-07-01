@@ -1,7 +1,7 @@
 package com.example.demo.dao;
 
 /**
- * Created by alinanicorescu on 01/07/2020.
+ * Custom exception class for account operation failure
  */
 public class AccountOperationException extends Exception {
     public AccountOperationException(String errorMessage) {
