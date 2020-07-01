@@ -5,7 +5,6 @@ import com.example.demo.dao.AccountService;
 import com.example.demo.dao.AccountBalance;
 import com.example.demo.dao.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
