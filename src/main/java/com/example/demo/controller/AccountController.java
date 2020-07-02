@@ -1,15 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.AccountOperationException;
 import com.example.demo.dao.AccountService;
-import com.example.demo.dao.AccountBalance;
 import com.example.demo.dao.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
 import lombok.extern.slf4j.Slf4j;
@@ -27,19 +24,13 @@ public class AccountController {
     AccountService accountService;
 
     @GetMapping(value = "{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public AccountBalance getAccountBalance(@PathVariable("email") String email,
+    public BigDecimal getAccountBalance(@PathVariable("email") String email,
                                             @RequestParam("accountCode") String accountCode)  {
         log.trace("getAccountBalance for {}, {}", email, accountCode);
         try {
-            Optional<AccountBalance> accountOpt =  accountService.getAccountBalance(email, accountCode);
-            if (accountOpt.isPresent()) {
-                return  accountOpt.get();
-            } else {
-                log.debug("No account was found for user email {}, account code {}", email, accountCode);
-                throw new ResponseStatusException(NOT_FOUND, "Account Not Found");
-            }
+           return accountService.getAccountBalance(email, accountCode);
         } catch (DataException e) {
-            log.error("Error while retrieving account for user email {} and account code: {}", email, accountCode, e);
+            log.debug("No account found for user email {} and account code: {}", email, accountCode, e.getMessage());
             throw new ResponseStatusException(NOT_FOUND, "Account Not Found");
         }
     }
@@ -53,7 +44,7 @@ public class AccountController {
                 email, accountCode, amount);
         try {
             accountService.deposit(email, accountCode, amount);
-        } catch (AccountOperationException e) {
+        } catch (Exception e) {
             log.error(
                     String.format("Error while deposit for user email: %s  account code: %s amount: %d",
                             email, accountCode, amount), e);
@@ -71,7 +62,7 @@ public class AccountController {
                 fromAccount, toAccount, amount);
         try {
             accountService.transfer(email, fromAccount, toAccount, amount);
-        } catch (AccountOperationException e) {
+        } catch (Exception e) {
             log.error(
                     String.format("Error while transfer for user email: %s from account: %s to account: %s amount %d",
                             email, fromAccount, toAccount, amount), e);
